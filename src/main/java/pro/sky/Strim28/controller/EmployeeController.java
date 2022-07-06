@@ -18,7 +18,7 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping()
+    @GetMapping
     public String hello() {
         return employeeService.hello();
     }
