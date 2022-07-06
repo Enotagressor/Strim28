@@ -1,4 +1,6 @@
-package pro.sky.Strim28;
+package pro.sky.Strim28.model;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.Objects;
 
@@ -36,6 +38,7 @@ public class Employee {
     public String getLastName() {
         return lastName;
     }
+    @JsonIgnore
     public  String getFullName() {
         return firstName + " " + lastName;
     }

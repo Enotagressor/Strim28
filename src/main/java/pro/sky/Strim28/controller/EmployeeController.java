@@ -1,12 +1,11 @@
-package pro.sky.Strim28.employeeService;
+package pro.sky.Strim28.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import pro.sky.Strim28.Employee;
-import pro.sky.Strim28.exception.EmployeeAlreadyAddedException;
-import pro.sky.Strim28.exception.EmployeeStoragesFullException;
+import pro.sky.Strim28.model.Employee;
+import pro.sky.Strim28.service.EmployeeService;
 
 import java.util.Collection;
 
@@ -25,29 +24,21 @@ public class EmployeeController {
     }
 
     @GetMapping("/add")
-    public String add(@RequestParam("firstName") String firstName,
+    public Employee add(@RequestParam("firstName") String firstName,
                       @RequestParam("lastName") String lastName,
                       @RequestParam("department") String department,
                       @RequestParam("salary") Double salary){
-        try {
-            employeeService.addEmployee(firstName, lastName, department, salary);
-            return "Employee added";
-        } catch (EmployeeAlreadyAddedException e) {
-            return "Такой сотрудник уже существует!";
-        } catch (EmployeeStoragesFullException e) {
-            return "Рабочих мест больше нет, увольте самого бесполезного!";
-        }
+            return  employeeService.addEmployee(firstName, lastName, department, salary);
     }
 
     @GetMapping("/remove")
-    public String remove(@RequestParam("firstName") String firstName,
+    public Employee remove(@RequestParam("firstName") String firstName,
                          @RequestParam("lastName") String lastName) {
-        employeeService.removeEmployee(firstName, lastName);
-        return "Employee removed";
+        return employeeService.removeEmployee(firstName, lastName);
     }
 
     @GetMapping("/find")
-    public String find(@RequestParam("firstName") String firstName,
+    public Employee find(@RequestParam("firstName") String firstName,
                        @RequestParam("lastName") String lastName) {
         return employeeService.findEmployee(firstName, lastName);
     }
