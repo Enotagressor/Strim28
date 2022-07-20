@@ -1,8 +1,12 @@
 package pro.sky.Strim28.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.commons.lang3.StringUtils;
 
+import java.util.Locale;
 import java.util.Objects;
+
+import static org.apache.commons.lang3.StringUtils.*;
 
 public class Employee {
     private final String firstName;
@@ -11,8 +15,8 @@ public class Employee {
     private Double salary;
 
     public Employee(String secondName, String firstName, String department, Double salary) {
-        this.firstName = firstName;
-        this.lastName = secondName;
+        this.firstName = capitalize(firstName.toLowerCase());
+        this.lastName = capitalize(secondName.toLowerCase());
         this.department = department;
         this.salary = salary;
 

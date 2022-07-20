@@ -9,6 +9,8 @@ import pro.sky.Strim28.exception.EmployeeNotFoundException;
 
 import java.util.*;
 
+import static org.apache.commons.lang3.StringUtils.*;
+
 @Service
 public class EmployeeService {
     private final Map<String, Employee> employees;
@@ -23,11 +25,9 @@ public class EmployeeService {
     }
 
     public Employee addEmployee(String firstName, String lastName, String department, Double salary) {
-        if (!StringUtils.isAlpha(firstName) || !StringUtils.isAlpha(lastName)) throw new EmployeeBadRequest();
-        String fName = StringUtils.capitalize(firstName);
-        String lName = StringUtils.capitalize(lastName);
-        Employee employee = new Employee(fName, lName, department, salary);
-        String key = getKey(fName, lName);
+        legalVoid(firstName, lastName);
+        Employee employee = new Employee(firstName, lastName, department, salary);
+        String key = getKey(firstName, lastName);
         if (employees.containsKey(key))  throw new EmployeeAlreadyAddedException();
         employees.put(key, employee);
         return employee;
@@ -37,11 +37,13 @@ public class EmployeeService {
         return firstName + " " + lastName;
     }
     public Employee removeEmployee(String firstName, String lastName) {
+        legalVoid(firstName, lastName);
         String key = getKey(firstName, lastName);
         if (!employees.containsKey(key)) throw new EmployeeNotFoundException();
         return employees.remove(key);
     }
     public Employee findEmployee(String firstName, String lastName) {
+        legalVoid(firstName, lastName);
         String key = getKey(firstName, lastName);
         if (employees.containsKey(key)) return employees.get(key);
         else throw new EmployeeNotFoundException();
@@ -49,5 +51,10 @@ public class EmployeeService {
 
     public Collection<Employee> listEmployee() {
         return Collections.unmodifiableCollection(employees.values());
+    }
+    private void legalVoid(String firstName, String lastName){
+        if (!isAlpha(firstName) || !isAlpha(lastName)){
+            throw new EmployeeBadRequest();
+        }
     }
 }
