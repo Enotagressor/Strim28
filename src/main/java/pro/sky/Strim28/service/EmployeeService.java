@@ -1,6 +1,8 @@
 package pro.sky.Strim28.service;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+import pro.sky.Strim28.exception.EmployeeBadRequest;
 import pro.sky.Strim28.model.Employee;
 import pro.sky.Strim28.exception.EmployeeAlreadyAddedException;
 import pro.sky.Strim28.exception.EmployeeNotFoundException;
@@ -21,8 +23,11 @@ public class EmployeeService {
     }
 
     public Employee addEmployee(String firstName, String lastName, String department, Double salary) {
-        Employee employee = new Employee(firstName, lastName, department, salary);
-        String key = getKey(firstName, lastName);
+        if (!StringUtils.isAlpha(firstName) || !StringUtils.isAlpha(lastName)) throw new EmployeeBadRequest();
+        String fName = StringUtils.capitalize(firstName);
+        String lName = StringUtils.capitalize(lastName);
+        Employee employee = new Employee(fName, lName, department, salary);
+        String key = getKey(fName, lName);
         if (employees.containsKey(key))  throw new EmployeeAlreadyAddedException();
         employees.put(key, employee);
         return employee;
