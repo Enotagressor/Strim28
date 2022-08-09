@@ -12,7 +12,7 @@ import static org.apache.commons.lang3.StringUtils.*;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-    private  Map<String, Employee> employees;
+    private final Map<String, Employee> employees;
 
 
     public EmployeeServiceImpl() {
@@ -35,16 +35,22 @@ public class EmployeeServiceImpl implements EmployeeService {
         return firstName + " " + lastName;
     }
     public Employee removeEmployee(String firstName, String lastName) {
-        legalVoid(firstName, lastName);
+
         String key = getKey(firstName, lastName);
-        if (!employees.containsKey(key)) throw new EmployeeNotFoundException();
+        if (!employees.containsKey(key)) {
+            throw new EmployeeNotFoundException();
+        }
         return employees.remove(key);
     }
     public Employee findEmployee(String firstName, String lastName) {
-        legalVoid(firstName, lastName);
+
         String key = getKey(firstName, lastName);
-        if (employees.containsKey(key)) return employees.get(key);
-        else throw new EmployeeNotFoundException();
+        if (employees.containsKey(key)) {
+            return employees.get(key);
+        }
+        else {
+            throw new EmployeeNotFoundException();
+        }
     }
 
     public Collection<Employee> listEmployee() {
