@@ -1,39 +1,17 @@
 package pro.sky.Strim28.service;
 
-import org.springframework.stereotype.Service;
 import pro.sky.Strim28.model.Employee;
-import pro.sky.Strim28.exception.EmployeeNotFoundException;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
-@Service
-public class DepartmentService {
-    private final EmployeeService employeeService;
-    public DepartmentService(EmployeeService employeeService) {
-        this.employeeService = employeeService;
-    }
+public interface DepartmentService {
+    Employee maxSalary(String department);
 
+    Employee minSalary(String department);
 
-    public Employee minSalary(String department) {
-        return employeeService.listEmployee().stream()
-                .filter(employee -> employee.getDepartment().equals(department))
-                .min(Comparator.comparingDouble(employee -> employee.getSalary()))
-                .orElseThrow(()-> new EmployeeNotFoundException());
-    }
-    public Employee maxSalary(String department){
-        return employeeService.listEmployee().stream()
-                .filter(employee -> employee.getDepartment().equals(department))
-                .max(Comparator.comparingDouble(employee -> employee.getSalary()))
-                .orElseThrow(()-> new EmployeeNotFoundException());
-    }
-    public List<Employee> allEmployeeDepartment(String department) {
-        return employeeService.listEmployee().stream()
-                .filter(e -> e.getDepartment().contains(department))
-                .collect(Collectors.toList());
-    }
-    public Map<String, List<Employee>> listDepartment() {
-        return employeeService.listEmployee().stream()
-                .collect(Collectors.groupingBy(e -> e.getDepartment()));
-    }
+    Collection<Employee> allEmployeeDepartment(String departmentId);
+
+    Map<String, List<Employee>> listDepartment();
 }

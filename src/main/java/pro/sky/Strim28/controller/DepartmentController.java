@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pro.sky.Strim28.model.Employee;
 import pro.sky.Strim28.service.DepartmentService;
+import pro.sky.Strim28.service.DepartmentServiceImpl;
 
 import java.util.Collection;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.Map;
 public class DepartmentController {
     private final DepartmentService serviceDandS;
 
-    public DepartmentController(DepartmentService serviceDandS) {
+    public DepartmentController(DepartmentServiceImpl serviceDandS) {
         this.serviceDandS = serviceDandS;
     }
     @GetMapping("/max-salary")
