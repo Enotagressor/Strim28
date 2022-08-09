@@ -16,7 +16,7 @@ import static pro.sky.Strim28.constant.Constants.*;
 @ExtendWith(MockitoExtension.class)
 public class DepartmentServiceImplTest {
     @Mock
-    private EmployeeService employeeService;
+    private EmployeeServiceImpl employeeService;
 
     @InjectMocks
     private DepartmentServiceImpl out;
@@ -27,13 +27,6 @@ public class DepartmentServiceImplTest {
                 .thenReturn(CORRECT_COLLECTION);
 
         assertIterableEquals(CORRECT_COLLECTION_DEP1, out.allEmployeeDepartment("1"));
-    }
-
-    @Test
-    public void shouldReturnAllEmployeesSortedByDepartment () {
-        when(employeeService.listEmployee())
-                .thenReturn(CORRECT_COLLECTION);
-        assertIterableEquals(CORRECT_COLLECTION, out.allEmployeeDepartment(null));
     }
 
     @Test
